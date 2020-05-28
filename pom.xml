@@ -197,4 +197,27 @@
             </plugins>
         </pluginManagement>
     </build>
+    <profiles>
+       <!-- <profile>
+            <id>dev</id>
+            <activation>
+                &lt;!&ndash;默认激活&ndash;&gt;
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+        </profile>-->
+        <profile>
+            <id>pre</id>
+            <activation>
+                <!--默认激活-->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>pre</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>
