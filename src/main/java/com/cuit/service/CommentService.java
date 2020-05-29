@@ -7,6 +7,7 @@ import com.cuit.model.CommentExample;
 import com.cuit.util.JSONUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +25,12 @@ import java.util.List;
 @Transactional
 public class CommentService {
     //设置APPID/AK/SK
-    public static final String APP_ID = "19934789";
-    public static final String API_KEY = "GC4wtv9uKrFHYn3SLqbNtsAF";
-    public static final String SECRET_KEY = "QwiGRDL6FlC4tayCsmqlxDcWeeC0eGdE";
+    //@Value("${APP_ID}")
+    public  String APP_ID = "19934789";
+   // @Value("${API_KEY}")
+    public  String API_KEY= "GC4wtv9uKrFHYn3SLqbNtsAF";
+   // @Value("${SECRET_KEY}")
+    public  String SECRET_KEY= "QwiGRDL6FlC4tayCsmqlxDcWeeC0eGdE";
 
     private CommentMapper commentMapper;
     @Autowired
