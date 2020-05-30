@@ -27,17 +27,30 @@
     </parent>
 
     <dependencies>
+        <!--百度api-->
         <dependency>
+            <groupId>com.baidu.aip</groupId>
+            <artifactId>java-sdk</artifactId>
+            <version>4.12.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
+
+        </dependency>
+
+        <!--<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.9</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-
 
 
         <dependency>
@@ -66,9 +79,6 @@
             <artifactId>jython-standalone</artifactId>
             <version>2.7.0</version>
         </dependency>
-
-
-
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
@@ -230,16 +240,16 @@
         </pluginManagement>
     </build>
     <profiles>
-       <!-- <profile>
-            <id>dev</id>
-            <activation>
-                &lt;!&ndash;默认激活&ndash;&gt;
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <spring.profiles.active>dev</spring.profiles.active>
-            </properties>
-        </profile>-->
+        <!-- <profile>
+             <id>dev</id>
+             <activation>
+                 &lt;!&ndash;默认激活&ndash;&gt;
+                 <activeByDefault>true</activeByDefault>
+             </activation>
+             <properties>
+                 <spring.profiles.active>dev</spring.profiles.active>
+             </properties>
+         </profile>-->
         <profile>
             <id>pre</id>
             <activation>

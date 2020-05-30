@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"com.cuit"})
-@MapperScan(basePackages = {"com.cuit.model","generator"})
+@MapperScan(basePackages = {"com.cuit","generator"})
 public class App {
     public static void main( String[] args ) {
         SpringApplication.run(App.class,args);
