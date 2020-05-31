@@ -3,7 +3,9 @@ package com.cuit;
 import com.baidu.aip.nlp.AipNlp;
 import com.baidu.aip.util.Base64Util;
 import com.cuit.model.Comment;
+import com.cuit.result.ResultEnum;
 import com.cuit.service.CommentService;
+import com.cuit.util.HttpUtil;
 import com.cuit.util.JSONUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -130,12 +132,13 @@ public class Demo01 {
             comment.setId(1);
             comment.setContent("百度是一家高科技公司");
             comment.setType(1);
+            HttpUtil.trustAllHosts();
             System.out.println(commentService.getPartingWord(comment));
         }
 
-        @Deprecated
     public String getAuth(String ak, String sk) {
         // 获取token地址
+        HttpUtil.trustAllHosts();
         String authHost = "https://aip.baidubce.com/oauth/2.0/token?";
         String getAccessTokenUrl = authHost
                 // 1. grant_type为固定参数
@@ -175,5 +178,47 @@ public class Demo01 {
             e.printStackTrace(System.err);
         }
         return null;
+    }
+    /**
+     * 无建议(默认)
+     * @description
+     *   已弃用
+     * @author ClearLi
+     * @date 2020/5/31 8:54
+     * @param
+     * @return void
+     */
+    @Test
+    @Deprecated
+    public void testSDK108ErrorCode(){
+        // iocr识别apiUrl
+        String recogniseUrl = "https://aip.baidubce.com/rpc/2.0/nlp/v2/word_emb_vec";
+       // String filePath ="C:\\Users\\Administrator\\Desktop\\IMG_0261.JPG";
+        // 官网获取的 API Key 更新为你注册的
+        String clientId = API_KEY;
+        // 官网获取的 Secret Key 更新为你注册的
+        String clientSecret = SECRET_KEY;
+        String templateSign = "你的模版ID";
+        try {
+            // 请求模板参数
+            String recogniseParams = "text=百度是一家高科技公司";
+            // 请求分类器参数
+//            String classifierParams = "classifierId=your_classfier_id&image=" + URLEncoder.encode(imgStr, "UTF-8");
+
+
+            String accessToken = getAuth(clientId, clientSecret);
+            // 请求模板识别
+            String result = HttpUtil.post(recogniseUrl, accessToken, recogniseParams);
+            // 请求分类器识别
+            // String result = HttpUtil.post(recogniseUrl, accessToken, classifierParams);
+
+            System.out.println(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void test4(){
+       //int a =  ResultEnum.SUCCESS.code;
     }
 }

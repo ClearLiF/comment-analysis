@@ -4,6 +4,7 @@ import com.baidu.aip.nlp.AipNlp;
 import com.cuit.mapper.CommentMapper;
 import com.cuit.model.Comment;
 import com.cuit.model.CommentExample;
+import com.cuit.util.HttpUtil;
 import com.cuit.util.JSONUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,8 @@ public class CommentService {
 
     public String getPartingWord(Comment comment){
         // 初始化一个AipNlp
+        //信任所有ssl
+        HttpUtil.trustAllHosts();
         AipNlp client = new AipNlp(APP_ID, API_KEY, SECRET_KEY);
 
         // 可选：设置网络连接参数
