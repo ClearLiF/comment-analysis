@@ -7,6 +7,7 @@ import com.cuit.result.ResultEnum;
 import com.cuit.service.CommentService;
 import com.cuit.util.HttpUtil;
 import com.cuit.util.JSONUtil;
+import com.cuit.util.JieBaUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -220,5 +221,6 @@ public class Demo01 {
     @Test
     public void test4(){
        //int a =  ResultEnum.SUCCESS.code;
+        System.out.println(JieBaUtil.testCutForSearch("百度是一家高科技公司"));
     }
 }

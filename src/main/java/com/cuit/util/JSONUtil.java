@@ -31,11 +31,17 @@ public class JSONUtil {
         List<String > list =  new ArrayList<>();
         JSONObject jsonObject = new JSONObject(json);
        // String items = jsonObject.getString("items");
-        JSONArray jsonArray = jsonObject.getJSONArray("items");
-        for (int i = 0; i < jsonArray.length(); i++) {
-           // System.out.println(jsonArray.getJSONObject(i).getString("item"));
-            list.add(jsonArray.getJSONObject(i).getString("item"));
+        try {
+            JSONArray jsonArray = jsonObject.getJSONArray("items");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                // System.out.println(jsonArray.getJSONObject(i).getString("item"));
+                list.add(jsonArray.getJSONObject(i).getString("item"));
+            }
+        }catch (Exception e){
+            System.out.println(json);
         }
+
+
         return list;
 
     }

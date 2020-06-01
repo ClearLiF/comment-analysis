@@ -30,6 +30,7 @@ public class AppTest
     }
     @Test
     public void testComment(){
-        commentService.partingWord();
+       // commentService.partingWord();
+        commentService.partingWord2();
     }
 }

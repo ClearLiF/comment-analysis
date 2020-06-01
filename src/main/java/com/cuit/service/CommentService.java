@@ -6,6 +6,9 @@ import com.cuit.model.Comment;
 import com.cuit.model.CommentExample;
 import com.cuit.util.HttpUtil;
 import com.cuit.util.JSONUtil;
+import com.cuit.util.JieBaUtil;
+import com.cuit.util.StringUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +27,7 @@ import java.util.List;
  **/
 @Service
 @Transactional
+@Slf4j
 public class CommentService {
     //设置APPID/AK/SK
     //@Value("${APP_ID}")
@@ -42,28 +46,55 @@ public class CommentService {
     /**
      * 无建议(默认)
      * @description
-     *          从数据库中读取相应的数据并进行分词操作
+     *          现在使用的分词系统
+     * @author ClearLi
+     * @date 2020/6/1 22:36
+     * @param
+     * @return java.lang.Integer
+     */
+    public Integer partingWord2(){
+        CommentExample commentExample = new CommentExample();
+        commentExample.createCriteria();
+        //获取所有的评论信息
+        List<Comment> comments = commentMapper.selectByExample(commentExample);
+        for (Comment comment : comments) {
+            if (null!=comment.getContent())
+                System.out.println(JieBaUtil.testCutForSearch(comment.getContent()));
+        }
+            return 0;
+        }
+    /**
+     * 无建议(默认)
+     * @description
+     *         已废弃 从数据库中读取相应的数据并进行分词操作
      * @author ClearLi
      * @date 2020/5/29 16:52
      * @param
      * @return java.lang.Integer
      */
+    @Deprecated
     public Integer partingWord(){
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria();
         //获取所有的评论信息
         List<Comment> comments = commentMapper.selectByExample(commentExample);
         for (Comment comment : comments) {
+            //log.info(partingWord);
             //进行分词
            // String words = JSONUtil.getWords(comment);
            // List<String> words = JSONUtil.getWords(getPartingWord(comment.getContent()));
-            String partingWord = getPartingWord(comment);
-            System.out.println(partingWord);
+
+                String partingWord = getPartingWord(comment);
+                log.info(partingWord);
+                System.out.println("comment = " + comment.getContent());
+
+
+           // System.out.println(partingWord);
             //写入数据库++++date 2020年5月29日
         }
         return 0;
     }
-
+    @Deprecated
     public String getPartingWord(Comment comment){
         // 初始化一个AipNlp
         //信任所有ssl
