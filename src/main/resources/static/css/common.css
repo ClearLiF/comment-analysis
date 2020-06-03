@@ -1,0 +1,28 @@
+.welcome {
+    height: 100px;
+    background-color: #c8cbcf;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+.content{
+    padding: 10px;
+}
+.crawl {
+    padding: 100px 300px;
+}
+
+.crawl .start {
+    margin-left: 500px;
+}
+
+.crawl table td {
+    height: 80px;
+}
+.analysis{
+    padding: 50px 50px;
+}
+
+

@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Title</title>
 </head>
 <body>
-$END$
+<div th:fragment="crawl">
+    <div class="crawl">
+        <form action="#">
+            <table class="form-group">
+                <tr>
+                    <td>数据爬取目标：</td>
+                    <td>
+                        <select class="form-control form-control-sm">
+                            <option>京东</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>爬取评论条数：</td>
+                    <td>
+                        <input class="form-control form-control-sm" type="text" placeholder="请输入10的倍数">
+                    </td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-light start">开始爬取</button>
+        </form>
+    </div>
+</div>
+<div th:fragment="dispose">
+    <form action="#">
+        <table class="form-group">
+            <tr>
+                <td>数据爬取目标：</td>
+                <td>
+                    <select class="form-control form-control-sm">
+                        <option>京东</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>爬取评论条数：</td>
+                <td>
+                    <input class="form-control form-control-sm" type="text" placeholder="请输入10的倍数">
+                </td>
+            </tr>
+        </table>
+        <button type="submit" class="btn btn-light start">开始爬取</button>
+    </form>
+</div>
+<div th:fragment="analysis">
+    <div class="analysis">
+        <div class="form-group">
+            <label for="analysis_text">请输入待分析的文本内容：</label>
+            <textarea class="form-control" id="analysis_text" rows="3"></textarea>
+        </div>
+        <button class="btn btn-light start">分析</button>
+    </div>
+</div>
+
 </body>
 </html>

@@ -45,8 +45,7 @@ public class JDComment {
         Matcher matcher = null;
         for (Element element : elements) {
             String href = element.selectFirst("a[href]")
-                    .attr("href")
-                    .toString();
+                    .attr("href");
             matcher = p.matcher(href);
             if (matcher.find()) {
                 itemList.add(matcher.group(1));
@@ -56,7 +55,7 @@ public class JDComment {
     }
 
     /**
-     * 获取对应的第一页评论内容
+     * 获取对应的一页评论内容
      *
      * @param productId 商品id
      * @param type      评论类型：1/差评；2/中评；3/好评；
