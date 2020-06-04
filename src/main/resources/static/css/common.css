@@ -7,9 +7,11 @@
     align-items: center;
     font-size: 24px;
 }
-.content{
+
+.content {
     padding: 10px;
 }
+
 .crawl {
     padding: 100px 300px;
 }
@@ -21,8 +23,18 @@
 .crawl table td {
     height: 80px;
 }
-.analysis{
+
+.analysis {
     padding: 50px 50px;
+}
+
+#pieChart {
+    height: 300px;
+    width: 600px;
+}
+
+.analysis .result {
+
 }
 
 

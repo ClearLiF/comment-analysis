@@ -22,4 +22,14 @@ public class WCTest {
         }
     }
 
+    @Test
+    public void run1() {
+        double[] temp = new double[3];
+        for (double v : temp) {
+            System.out.println(v);
+        }
+    }
+
+
+
 }

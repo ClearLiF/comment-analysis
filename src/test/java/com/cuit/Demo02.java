@@ -26,7 +26,7 @@ public class Demo02 extends TestCase {
          */
         @Override
         protected void setUp() throws Exception {
-            WordDictionary.getInstance().init(Paths.get("resources"));
+            WordDictionary.getInstance().init(Paths.get("src/main/resources"));
         }
 
         @Test

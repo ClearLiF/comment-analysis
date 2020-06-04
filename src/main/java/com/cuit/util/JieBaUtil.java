@@ -21,14 +21,14 @@ public class JieBaUtil {
      * 读取conf目录下所有的自定义词库**.dict文件。
      */
     static {
-        WordDictionary.getInstance().init(Paths.get("resources"));
+        WordDictionary.getInstance().init(Paths.get("src/main/resources"));
     }
 
     public static List<String> testCutForSearch(String sentences) {
         List<String> x = segmenter.sentenceProcess(sentences);
         //移除非中文字符
         x.removeIf(next -> !StringUtil.isAllChinese(next));
-        System.out.println(x);
+//        System.out.println(x);
         return x;
     }
 }
