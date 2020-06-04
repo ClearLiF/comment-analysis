@@ -1,6 +1,7 @@
 package com.cuit.service;
 
 import com.baidu.aip.nlp.AipNlp;
+import com.cuit.dto.PageBeanDTO;
 import com.cuit.mapper.CommentMapper;
 import com.cuit.model.Comment;
 import com.cuit.model.CommentExample;
@@ -110,6 +111,18 @@ public class CommentService {
             list.add(comment.getType() + "\t" + ListUtil.listToString(words));
         }
         return list;
+    }
+
+    public PageBeanDTO<Comment> getComment(PageBeanDTO<Comment> pageBeanDTO) {
+        int start = (pageBeanDTO.getCurrentPage() - 1) * pageBeanDTO.getPageSize();
+        int length = pageBeanDTO.getPageSize();
+        pageBeanDTO.setRows(commentMapper.selectPage(start, length, pageBeanDTO.getType()));
+        int countComment = commentMapper.countComment(pageBeanDTO.getType());
+        int pageNum = countComment % pageBeanDTO.getPageSize() == 0
+                ? countComment / pageBeanDTO.getPageSize() :
+                countComment / pageBeanDTO.getPageSize() + 1;
+        pageBeanDTO.setTotalPages(pageNum);
+        return pageBeanDTO;
     }
 
     /**

@@ -27,4 +27,9 @@ public interface CommentMapper {
     int updateByPrimaryKeySelective(Comment record);
 
     int updateByPrimaryKey(Comment record);
+
+    List<Comment> selectPage(@Param("begin") Integer begin,
+                                     @Param("size") Integer size,@Param("type") int type);
+
+    int countComment( @Param("type")int type);
 }
