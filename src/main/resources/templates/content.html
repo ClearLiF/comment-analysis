@@ -24,7 +24,8 @@
                 <tr>
                     <td>爬取评论条数：</td>
                     <td>
-                        <input class="form-control form-control-sm" type="text" placeholder="请输入10的倍数">
+                        <input class="form-control form-control-sm" id="crawl_num" type="number" placeholder="请输入10的倍数"
+                               checked>
                     </td>
                 </tr>
             </table>
@@ -33,25 +34,17 @@
     </div>
 </div>
 <div th:fragment="dispose">
-    <form action="#">
-        <table class="form-group">
-            <tr>
-                <td>数据爬取目标：</td>
-                <td>
-                    <select class="form-control form-control-sm">
-                        <option>京东</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>爬取评论条数：</td>
-                <td>
-                    <input class="form-control form-control-sm" type="text" placeholder="请输入10的倍数">
-                </td>
-            </tr>
-        </table>
-        <button type="submit" class="btn btn-light start">开始爬取</button>
-    </form>
+    <table id="comment_table" lay-filter="comment_table"></table>
+    <script type="text/html" id="bar_left">
+        <button class="layui-btn layui-btn-sm btn-add" lay-event="add_comment">
+            <i class="layui-icon layui-icon-add-1"></i>
+            添加一条数据
+        </button>
+    </script>
+    <script type="text/html" id="bar_right">
+        <a class="layui-btn layui-btn-xs bar-btn" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs bar-btn" lay-event="del">删除</a>
+    </script>
 </div>
 <div th:fragment="analysis">
     <div class="analysis">

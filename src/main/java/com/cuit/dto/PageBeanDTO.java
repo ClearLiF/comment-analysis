@@ -22,12 +22,12 @@ public class PageBeanDTO<T> {
     /*
     * 每页的数量
     * */
-    private Integer pageSize=7;
+    private Integer pageSize;
     /*
     * 数据类型
     * */
     private List<T> rows;
-    private Integer type=-1;
+    private Integer sum;
 
 
 }

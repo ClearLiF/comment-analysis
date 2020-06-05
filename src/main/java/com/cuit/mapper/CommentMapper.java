@@ -29,7 +29,7 @@ public interface CommentMapper {
     int updateByPrimaryKey(Comment record);
 
     List<Comment> selectPage(@Param("begin") Integer begin,
-                                     @Param("size") Integer size,@Param("type") int type);
+                                     @Param("size") Integer size);
 
-    int countComment( @Param("type")int type);
+    int countComment();
 }

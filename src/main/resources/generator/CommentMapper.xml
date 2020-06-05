@@ -134,16 +134,11 @@
         select
         <include refid="Base_Column_List"/>
         from comment
-        where #{type}=type
         limit #{begin},#{size}
     </select>
     <select id="countComment" resultType="java.lang.Integer">
         select count(*)
         from comment
-        <if test="type != -1">
-            where type = #{type}
-        </if>
-
     </select>
     <update id="updateByExampleSelective" parameterType="map">
         update comment

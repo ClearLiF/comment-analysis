@@ -18,11 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author : CLEAR Li
@@ -82,7 +79,7 @@ public class CommentService {
      * @author jwei
      */
     public boolean commentToHdfs() {
-        List<String> list = cutWordsFormDB();
+        List<String> list = cutWordsFromDB();
         try {
             hdfs.init();
             BufferedWriter writer = hdfs.getWriter();
@@ -103,7 +100,7 @@ public class CommentService {
      * @date 2020/6/3 14:40
      * @author jwei
      */
-    private List<String> cutWordsFormDB() {
+    private List<String> cutWordsFromDB() {
         List<String> list = new ArrayList<>();
         List<Comment> comments = commentMapper.selectByExample(new CommentExample());
         for (Comment comment : comments) {
@@ -116,12 +113,13 @@ public class CommentService {
     public PageBeanDTO<Comment> getComment(PageBeanDTO<Comment> pageBeanDTO) {
         int start = (pageBeanDTO.getCurrentPage() - 1) * pageBeanDTO.getPageSize();
         int length = pageBeanDTO.getPageSize();
-        pageBeanDTO.setRows(commentMapper.selectPage(start, length, pageBeanDTO.getType()));
-        int countComment = commentMapper.countComment(pageBeanDTO.getType());
+        pageBeanDTO.setRows(commentMapper.selectPage(start, length));
+        int countComment = commentMapper.countComment();
         int pageNum = countComment % pageBeanDTO.getPageSize() == 0
                 ? countComment / pageBeanDTO.getPageSize() :
                 countComment / pageBeanDTO.getPageSize() + 1;
         pageBeanDTO.setTotalPages(pageNum);
+        pageBeanDTO.setSum(countComment);
         return pageBeanDTO;
     }
 
