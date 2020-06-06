@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @EnableAsync
 @RequestMapping("dispose")
 public class DisposeController {
-
-    private CommentService commentService;
     private DisposeService disposeService;
 
     @GetMapping("")
@@ -30,15 +28,6 @@ public class DisposeController {
         return "index";
     }
 
-    @PostMapping("toHdfs")
-    @ResponseBody
-    public Result<String> toHdfs() {
-        if (commentService.commentToHdfs()) {
-            return new Result<>("写入完成！");
-        } else {
-            return new Result<>("写入失败！");
-        }
-    }
 
     @PostMapping("wordCount")
     @ResponseBody
@@ -51,10 +40,6 @@ public class DisposeController {
         }
     }
 
-    @Autowired
-    public void setCommentService(CommentService commentService) {
-        this.commentService = commentService;
-    }
 
     @Autowired
     public void setDisposeService(DisposeService disposeService) {

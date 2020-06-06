@@ -17,6 +17,7 @@ public class DisposeService {
     private WcMapper wcMapper;
     private WordCount wordCount;
     private ModelStatusMapper modelStatusMapper;
+    private CommentService commentService;
 
     public boolean canRun() {
         ModelStatus modelStatus = modelStatusMapper.selectByPrimaryKey(0);
@@ -30,7 +31,7 @@ public class DisposeService {
 
     @Async
     public void wordCount() {
-
+        commentService.commentToHdfs();
         ModelStatus modelStatus = modelStatusMapper.selectByPrimaryKey(0);
         modelStatus.setStatus(0);
         modelStatusMapper.updateByPrimaryKey(modelStatus);
@@ -69,5 +70,10 @@ public class DisposeService {
     @Autowired
     public void setWordCount(WordCount wordCount) {
         this.wordCount = wordCount;
+    }
+
+    @Autowired
+    public void setCommentService(CommentService commentService) {
+        this.commentService = commentService;
     }
 }
