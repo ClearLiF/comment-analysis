@@ -13,8 +13,8 @@ import com.cuit.util.ListUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -30,7 +30,6 @@ import java.util.List;
  * @date : 2020-05-29 16:45
  **/
 @Service
-@Transactional
 @Slf4j
 public class CommentService {
     //设置APPID/AK/SK
@@ -48,8 +47,6 @@ public class CommentService {
         this.commentMapper = commentMapper;
     }
 
-    @Autowired
-    private Hdfs hdfs;
 
     /**
      * 无建议(默认)
@@ -73,42 +70,7 @@ public class CommentService {
     }
 
 
-    /**
-     * @return boolean
-     * @date 2020/6/3 14:05
-     * @author jwei
-     */
-    public boolean commentToHdfs() {
-        List<String> list = cutWordsFromDB();
-        try {
-            hdfs.init();
-            BufferedWriter writer = hdfs.getWriter();
-            for (String s : list) {
-                writer.write(s);
-                writer.newLine();
-            }
-            hdfs.close();
-        } catch (IOException e) {
-            return false;
-        }
-        return true;
-    }
 
-
-    /**
-     * @return java.util.List<java.lang.String>
-     * @date 2020/6/3 14:40
-     * @author jwei
-     */
-    private List<String> cutWordsFromDB() {
-        List<String> list = new ArrayList<>();
-        List<Comment> comments = commentMapper.selectByExample(new CommentExample());
-        for (Comment comment : comments) {
-            List<String> words = JieBaUtil.testCutForSearch(comment.getContent());
-            list.add(comment.getType() + "\t" + ListUtil.listToString(words));
-        }
-        return list;
-    }
 
     public PageBeanDTO<Comment> getComment(PageBeanDTO<Comment> pageBeanDTO) {
         int start = (pageBeanDTO.getCurrentPage() - 1) * pageBeanDTO.getPageSize();

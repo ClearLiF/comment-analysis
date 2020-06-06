@@ -1,12 +1,23 @@
 package com.cuit.service;
 
+import com.cuit.mapper.CommentMapper;
 import com.cuit.mapper.ModelStatusMapper;
 import com.cuit.mapper.WcMapper;
+import com.cuit.model.Comment;
+import com.cuit.model.CommentExample;
 import com.cuit.model.ModelStatus;
+import com.cuit.mr.Hdfs;
 import com.cuit.mr.WordCount;
+import com.cuit.util.JieBaUtil;
+import com.cuit.util.ListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author Jwei
@@ -17,7 +28,10 @@ public class DisposeService {
     private WcMapper wcMapper;
     private WordCount wordCount;
     private ModelStatusMapper modelStatusMapper;
-    private CommentService commentService;
+    private CommentMapper commentMapper;
+
+
+    private Hdfs hdfs;
 
     public boolean canRun() {
         ModelStatus modelStatus = modelStatusMapper.selectByPrimaryKey(0);
@@ -29,13 +43,49 @@ public class DisposeService {
         }
     }
 
+    /**
+     * @return boolean
+     * @date 2020/6/3 14:05
+     * @author jwei
+     */
+    public void commentToHdfs() {
+        List<String> list = cutWordsFromDB();
+        try {
+            hdfs.init();
+            BufferedWriter writer = hdfs.getWriter();
+            for (String s : list) {
+                writer.write(s);
+                writer.newLine();
+            }
+            hdfs.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * @return java.util.List<java.lang.String>
+     * @date 2020/6/3 14:40
+     * @author jwei
+     */
+    private List<String> cutWordsFromDB() {
+        List<String> list = new ArrayList<>();
+        List<Comment> comments = commentMapper.selectByExample(new CommentExample());
+        for (Comment comment : comments) {
+            List<String> words = JieBaUtil.testCutForSearch(comment.getContent());
+            list.add(comment.getType() + "\t" + ListUtil.listToString(words));
+        }
+        return list;
+    }
+
     @Async
     public void wordCount() {
-        commentService.commentToHdfs();
         ModelStatus modelStatus = modelStatusMapper.selectByPrimaryKey(0);
         modelStatus.setStatus(0);
         modelStatusMapper.updateByPrimaryKey(modelStatus);
         wcMapper.truncate0();
+        commentToHdfs();
         try {
             wordCount.run();
             modelStatus.setStatus(1);
@@ -43,7 +93,6 @@ public class DisposeService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return;
     }
 
     private void backup() {
@@ -73,7 +122,12 @@ public class DisposeService {
     }
 
     @Autowired
-    public void setCommentService(CommentService commentService) {
-        this.commentService = commentService;
+    public void setCommentMapper(CommentMapper commentMapper) {
+        this.commentMapper = commentMapper;
+    }
+
+    @Autowired
+    public void setHdfs(Hdfs hdfs) {
+        this.hdfs = hdfs;
     }
 }
