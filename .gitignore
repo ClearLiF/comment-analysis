@@ -7,7 +7,7 @@
 *.iml
 out
 gen
-#application-pre.yml
+application-pre.yml
 
 # Project exclude paths
 /target/
