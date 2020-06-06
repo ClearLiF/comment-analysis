@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/css/common.css"/>
     <script src="/js/echarts.min.js" type="application/javascript"></script>
     <script src="/js/common.js" type="application/javascript"></script>
@@ -11,7 +12,7 @@
 <body>
 <div th:fragment="crawl">
     <div class="crawl">
-        <form action="#">
+        <form id="crawl-form">
             <table class="form-group">
                 <tr>
                     <td>数据爬取目标：</td>
@@ -22,15 +23,35 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>搜索关键词：</td>
+                    <td>
+                        <input class="form-control form-control-sm" type="text" id="search_key"
+                               placeholder="如“手机”、“电脑”..." required>
+                    </td>
+                </tr>
+                <tr>
                     <td>爬取评论条数：</td>
                     <td>
-                        <input class="form-control form-control-sm" id="crawl_num" type="number" placeholder="请输入10的倍数"
-                               checked>
+                        <input class="form-control form-control-sm" id="crawl_num" type="number"
+                               placeholder="请输入10的倍数" required>
                     </td>
                 </tr>
             </table>
-            <button type="submit" class="btn btn-light start">开始爬取</button>
+            <button id="btn_crawl" type="submit" class="layui-btn start layui-btn-disabled" disabled>检测状态中...</button>
         </form>
+        <div class="collapse" id="craw-status-div">
+            <div class="mt-4">
+                <div><b>当前状态：<span id="status">检测状态中</span></b></div>
+                <div class="mt-4">总进度：<span id="currType">检测状态中</span></div>
+                <div class="layui-progress layui-progress-big mt-3" lay-filter="progress-all" lay-showPercent="true">
+                    <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+                </div>
+                <div class="mt-2">当前类型评论获取进度：</div>
+                <div class="layui-progress mt-3" lay-filter="progress-curr" lay-showPercent="true">
+                    <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div th:fragment="dispose">

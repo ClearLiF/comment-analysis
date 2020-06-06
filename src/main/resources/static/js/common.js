@@ -1,5 +1,11 @@
 $(function () {
+    layui.use('element')
     loadTable()
+    $('#crawl-form').submit(function () {
+            startCrawler()
+            return false;
+        }
+    )
     $('#btn_analysis').click(function () {
         this.blur()
         clearPie()
@@ -8,7 +14,76 @@ $(function () {
     $("#analysis_text").focusin(function () {
         $('#analysis_result_div').collapse('hide')
     })
+    getCrawlerStatus()
 })
+
+function startCrawler() {
+    $('#btn_crawl').attr('disabled')
+    $('#btn_crawl').addClass('layui-btn-disabled')
+    $('#btn_crawl').text("爬取任务正在进行中...")
+    let num = $('#crawl_num').val();
+    let k = $('#search_key').val();
+    if (num > 0) {
+        $('#craw-status-div').collapse('show')
+        $.get('crawler/get?num=' + num + '&keyword=' + k,
+            function () {
+                crawlerStatusListening()
+            })
+    } else {
+        layer.msg("评论爬取数量非法！！！", {icon: 5})
+    }
+
+
+}
+
+function crawlerStatusListening() {
+    let timer = setInterval(function () {
+        $.get('crawler/status', function (res) {
+            let data = res.data;
+            $("#status").text(data.status)
+            $("#currType").text(data.currType)
+            let pcurr = data.currCrawlNum / data.crawlNum;
+            let pall = data.typeProgress / 3 + pcurr / 3;
+            layui.element.progress('progress-curr', toPercent(pcurr));
+            layui.element.progress('progress-all', toPercent(pall));
+            if (data.running == false) {
+                clearInterval(timer);
+                $('#craw-status-div').collapse('hide')
+                layer.msg("爬取任务已完成！", {icon: 1})
+                $('#btn_crawl').removeAttr('disabled')
+                $('#btn_crawl').removeClass('layui-btn-disabled')
+                $('#btn_crawl').text("开始爬取")
+            }
+        })
+    }, 300);
+}
+
+
+function getCrawlerStatus() {
+    $.get('crawler/status', function (res) {
+        if (res.data.running == true) {
+            $('#btn_crawl').text("爬取任务正在进行中...")
+            $('#craw-status-div').collapse('show')
+            crawlerStatusListening()
+        } else {
+            $('#btn_crawl').removeAttr('disabled')
+            $('#btn_crawl').removeClass('layui-btn-disabled')
+            $('#btn_crawl').text("开始爬取")
+        }
+    })
+}
+
+function toPercent(point) {
+    if (point <= 0) {
+        return '0%';
+    }
+    if (point > 1) {
+        return '100%'
+    }
+    var str = Number(point * 100).toFixed();
+    str += "%";
+    return str;
+}
 
 
 function loadTable() {
@@ -35,8 +110,27 @@ function loadTable() {
             }
             , cols: [[ //表头
                 {field: 'id', title: 'ID', width: 60, sort: true, fixed: 'left'}
-                , {field: 'content', title: '评论内容', width: 1080}
-                , {field: 'type', title: '类型(3/好；2/中；1/差)', width: 200, sort: true}
+                , {field: 'content', title: '评论内容', width: 1160}
+                , {
+                    field: 'type', title: '评论类型', width: 120, sort: true,
+                    templet: function (res) {
+                        let str
+                        switch (res.type) {
+                            case 3:
+                                str = '好评';
+                                break;
+                            case 2:
+                                str = '中评';
+                                break;
+                            case 1:
+                                str = '差评';
+                                break;
+                            default:
+                                str = res.type;
+                        }
+                        return str;
+                    }
+                }
                 , {fixed: 'right', title: '操作', toolbar: '#bar_right', width: 120}
             ]]
             , page: true

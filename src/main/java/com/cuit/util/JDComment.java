@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -93,11 +94,13 @@ public class JDComment {
      * @param keyword 查找商品关键字
      * @param num     评论条数
      * @param type    评论类型：1/差评；2/中评；3/好评；
+     * @param session
      * @return
      */
-    public static List<String> getComments(String keyword, int num, int type) throws IOException {
-        List<String> items = getItems(keyword);
+    public static List<String> getComments(String keyword, int num, int type, HttpSession session) throws IOException {
         int count = 0;
+        session.setAttribute("currCrawlNum",count);
+        List<String> items = getItems(keyword);
         List<String> list = new ArrayList<>();
         for (String item : items) {
             int page = 0;
@@ -106,6 +109,7 @@ public class JDComment {
                 int size = comments.size();
                 list.addAll(comments);
                 count += size;
+                session.setAttribute("currCrawlNum",count);
                 if (size < 10) {
                     break;
                 }
