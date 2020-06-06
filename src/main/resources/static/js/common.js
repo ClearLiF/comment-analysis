@@ -18,19 +18,23 @@ $(function () {
 })
 
 function startCrawler() {
-    $('#btn_crawl').attr('disabled')
-    $('#btn_crawl').addClass('layui-btn-disabled')
-    $('#btn_crawl').text("爬取任务正在进行中...")
     let num = $('#crawl_num').val();
     let k = $('#search_key').val();
-    if (num > 0) {
+    if (num > 0 && num <= 300) {
+        $('#btn_crawl').attr('disabled')
+        $('#btn_crawl').addClass('layui-btn-disabled')
+        $('#btn_crawl').text("爬取任务正在进行中...")
         $('#craw-status-div').collapse('show')
         $.get('crawler/get?num=' + num + '&keyword=' + k,
             function () {
                 crawlerStatusListening()
             })
     } else {
-        layer.msg("评论爬取数量非法！！！", {icon: 5})
+        if (num > 300) {
+            layer.msg("当前爬取条数上限为每一类300条！！！", {icon: 5})
+        } else {
+            layer.msg("评论爬取数量非法！！！", {icon: 5})
+        }
     }
 
 
@@ -109,8 +113,8 @@ function loadTable() {
                 };
             }
             , cols: [[ //表头
-                {field: 'id', title: 'ID', width: 60, sort: true, fixed: 'left'}
-                , {field: 'content', title: '评论内容', width: 1160}
+                {field: 'id', title: 'ID', width: 70, sort: true, fixed: 'left'}
+                , {field: 'content', title: '评论内容', width: 1150}
                 , {
                     field: 'type', title: '评论类型', width: 120, sort: true,
                     templet: function (res) {
@@ -193,6 +197,11 @@ function loadTable() {
                                     })
                             });
                     });
+            } else if (obj.event == 'generator_model') {
+                $.post('dispose/wordCount',
+                    function (res) {
+                        layer.alert(res.data)
+                    })
             }
         });
     });

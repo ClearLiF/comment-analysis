@@ -1,8 +1,11 @@
 package com.cuit.controller;
 
 import com.cuit.dto.AnalysisResultDTO;
+import com.cuit.mapper.ModelStatusMapper;
+import com.cuit.model.ModelStatus;
 import com.cuit.result.Result;
-import com.cuit.service.AnalysisService;
+import com.cuit.service.impl.AnalysisServiceImpl;
+import com.cuit.service.impl.AnalysisServiceImpl2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("analysis")
 public class AnalysisController {
 
-    private AnalysisService analysisService;
+    private ModelStatusMapper modelStatusMapper;
+    private AnalysisServiceImpl analysisServiceImpl;
+    private AnalysisServiceImpl2 analysisServiceImpl2;
 
     @GetMapping("")
     public String index(Model model) {
@@ -29,11 +34,28 @@ public class AnalysisController {
     @GetMapping("analysis")
     @ResponseBody
     public Result<AnalysisResultDTO> analysis(String text) {
-        return new Result<>(analysisService.analysis(text));
+        ModelStatus modelStatus = modelStatusMapper.selectByPrimaryKey(0);
+        AnalysisResultDTO analysis = null;
+        if (modelStatus.getStatus() == 1) {
+            analysis = analysisServiceImpl.analysis(text);
+        } else {
+            analysis = analysisServiceImpl2.analysis(text);
+        }
+        return new Result<>(analysis);
     }
 
     @Autowired
-    public void setAnalysisService(AnalysisService analysisService) {
-        this.analysisService = analysisService;
+    public void setAnalysisServiceImpl(AnalysisServiceImpl analysisServiceImpl) {
+        this.analysisServiceImpl = analysisServiceImpl;
+    }
+
+    @Autowired
+    public void setAnalysisServiceImpl2(AnalysisServiceImpl2 analysisServiceImpl2) {
+        this.analysisServiceImpl2 = analysisServiceImpl2;
+    }
+
+    @Autowired
+    public void setModelStatusMapper(ModelStatusMapper modelStatusMapper) {
+        this.modelStatusMapper = modelStatusMapper;
     }
 }

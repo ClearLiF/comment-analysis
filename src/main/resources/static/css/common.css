@@ -25,7 +25,11 @@
 }
 
 .analysis {
-    padding: 50px 50px;
+    padding: 20px 30px;
+}
+
+#analysis_text {
+    width: 1000px;
 }
 
 #pieChart {
@@ -33,10 +37,11 @@
     width: 500px;
 }
 
-a.bar-btn{
+a.bar-btn {
     color: #FFFFFF;
 }
-button.btn-add{
+
+button.btn-add {
     display: inline-flex;
 
 }

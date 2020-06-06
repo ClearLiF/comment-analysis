@@ -41,6 +41,7 @@ public class CrawlService {
                     session.setAttribute("currCrawlNum", num + j + 1);
                 }
             } catch (IOException e) {
+                System.out.println(e);
                 return;
             }
         }

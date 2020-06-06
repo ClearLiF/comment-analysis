@@ -23,6 +23,9 @@ import java.util.regex.Pattern;
  * @Date 2020/5/30 21:53
  */
 public class JDComment {
+
+    private static final String userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36";
+
     /**
      * 获取评论数最多的一些（第一页）商品
      *
@@ -37,7 +40,7 @@ public class JDComment {
         dataMap.put("psort", "4");
         Document doc = Jsoup.connect(url)
                 .data(dataMap)
-                .userAgent("Mozilla")
+                .userAgent(userAgent)
                 .get();
         Elements elements = doc.select("div.p-name.p-name-type-2");
         List<String> itemList = new ArrayList<>();
@@ -73,7 +76,7 @@ public class JDComment {
         dataMap.put("pageSize", "10");
         Document doc = Jsoup.connect(url)
                 .data(dataMap)
-                .userAgent("Mozilla")
+                .userAgent(userAgent)
                 .get();
         List<String> commentList = new ArrayList<>();
         try {
@@ -105,7 +108,11 @@ public class JDComment {
         for (String item : items) {
             int page = 0;
             while (count < num) {
-                List<String> comments = getComment(item, type, page++);
+                page++;
+                if (page > 20) {
+                    break;
+                }
+                List<String> comments = getComment(item, type, page);
                 int size = comments.size();
                 list.addAll(comments);
                 count += size;
