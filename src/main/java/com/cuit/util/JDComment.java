@@ -99,7 +99,7 @@ public class JDComment {
      */
     public static List<String> getComments(String keyword, int num, int type, HttpSession session) throws IOException {
         int count = 0;
-        session.setAttribute("currCrawlNum",count);
+        session.setAttribute("currCrawlNum", count);
         List<String> items = getItems(keyword);
         List<String> list = new ArrayList<>();
         for (String item : items) {
@@ -109,7 +109,7 @@ public class JDComment {
                 int size = comments.size();
                 list.addAll(comments);
                 count += size;
-                session.setAttribute("currCrawlNum",count);
+                session.setAttribute("currCrawlNum", count);
                 if (size < 10) {
                     break;
                 }

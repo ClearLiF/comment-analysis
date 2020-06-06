@@ -35,7 +35,7 @@ public class CrawlService {
                 session.setAttribute("crawlerStatus", "爬取数据完成,正在将数据写入数据库...");
                 for (int j = 0; j < comments.size(); j++) {
                     Comment c = new Comment();
-                    c.setContent(comments.get(i));
+                    c.setContent(comments.get(j));
                     c.setType(i);
                     commentMapper.insertSelective(c);
                     session.setAttribute("currCrawlNum", num + j + 1);
