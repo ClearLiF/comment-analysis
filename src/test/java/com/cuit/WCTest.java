@@ -15,11 +15,8 @@ public class WCTest {
 
     @Test
     public void run() {
-        try {
-            System.out.println(wordCount.run());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        StringBuilder stringBuilder = new StringBuilder();
+        System.out.println(stringBuilder.toString());
     }
 
     @Test

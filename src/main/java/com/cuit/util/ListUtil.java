@@ -19,7 +19,9 @@ public class ListUtil {
             stringBuilder.append(s);
             stringBuilder.append(" ");
         }
-        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        if (stringBuilder.length() > 0) {
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        }
         return stringBuilder.toString();
     }
 }
