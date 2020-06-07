@@ -1,5 +1,6 @@
 package com.cuit.controller;
 
+import com.cuit.controller.interceptor.UnAuthRequest;
 import com.cuit.dto.AnalysisResultDTO;
 import com.cuit.mapper.ModelStatusMapper;
 import com.cuit.model.ModelStatus;
@@ -24,13 +25,14 @@ public class AnalysisController {
     private ModelStatusMapper modelStatusMapper;
     private AnalysisServiceImpl analysisServiceImpl;
     private AnalysisServiceImpl2 analysisServiceImpl2;
-
+    @UnAuthRequest
     @GetMapping("")
     public String index(Model model) {
         model.addAttribute("content", "analysis");
         return "index";
     }
 
+    @UnAuthRequest
     @GetMapping("analysis")
     @ResponseBody
     public Result<AnalysisResultDTO> analysis(String text) {

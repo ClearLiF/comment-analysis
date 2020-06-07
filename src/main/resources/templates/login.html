@@ -1,40 +1,157 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<title>首页</title>
-	<link rel="stylesheet" href="/css/bootstrap.css"/>
-	<link rel="stylesheet" href="/css/common.css"/>
-	<script src="/js/jquery-3.4.1.js" type="application/javascript"></script>
-	<script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="/bootstrapVaildator/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <link rel="stylesheet" href="/bootstrapVaildator/css/bootstrapValidator.css"/>
+    <script src="/bootstrapVaildator/js/jquery.js" type="application/javascript"></script>
+    <script src="/bootstrapVaildator/js/bootstrap.min.js" type="application/javascript"></script>
+    <script type="text/javascript" src="/bootstrapVaildator/js/bootstrapValidator.js"></script>
+    <script type="text/javascript" src="/bootstrapVaildator/js/zh_CN.js"></script>
+    <script type="text/javascript" src="/js/myjs.js"></script>
 </head>
 <body>
 <div class="container-fluid">
-	<div class="welcome border  border-secondary rounded">
-		<div>评论情感倾向分析系统</div>
-	</div>
-	<ul class="nav nav-tabs">
-		<li class="nav-item">
-			<a class="nav-link" th:classappend="${content eq 'crawl'}?'active'" href="/crawler">数据爬取</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" th:classappend="${content eq 'dispose'}?'active'" href="/dispose">数据处理</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" th:classappend="${content eq 'analysis'}?'active'" href="/analysis">情感倾向分析</a>
-		</li>
-	</ul>
-	<div class="content border border-top-0">
-		<div th:if="${content} == 'crawl'">
-			<div th:replace="content :: crawl"></div>
-		</div>
-		<div th:if="${content} == 'dispose'">
-			<div th:replace="content :: dispose"></div>
-		</div>
-		<div th:if="${content} == 'analysis'">
-			<div th:replace="content :: analysis"></div>
-		</div>
+    <div class="welcome border  border-secondary rounded">
+        <div>评论情感倾向分析系统</div>
+    </div>
+</div>
+<div class="row">
+	<div class="container ">
+		<form action="/loginInto" id="defaultForm" method="post" class="form-horizontal"  role="form">
+			<fieldset>
+				<legend>登录</legend>
+				<div class="form-group">
+					<label class="col-lg-3 control-label">用户名</label>
+					<div class="col-lg-4">
+						<input type="text" class="form-control" style="color: black" name="username" placeholder="username" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-lg-3 control-label" >密码</label>
+					<div class="col-lg-5">
+						<input type="password" style="color: black" class="form-control" name="password" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-3 control-label">验证码</label>
+					<div class="col-lg-5">
+						<input type="text" id="validateInput"  name="validateInput"  class="form-control" placeholder="请输入图形验证码" style="color: black" />
+						<span><canvas id="canvas" width="120" height="45"></canvas>
+
+				 		<a href="#" id="changeImg">看不清，换一张</a></span><br>
+					</div>
+					<span id="validateSpan" hidden>验证码错误</span>
+				</div>
+
+
+
+
+			</fieldset>
+			<div class="form-group">
+				<div class="col-lg-9 col-lg-offset-3">
+					<button type="submit" id="validateBtn" class="btn btn-primary"  value="Sign up">登录</button>
+					<button type="reset" id="resetBtn" class="btn btn-primary"  value="Sign up 2">重填</button>
+				</div>
+			</div>
+		</form>
 	</div>
 </div>
+<script>
+    $(function () {
+        drawPic();
+
+        $("#changeImg").on('click', function (e) {
+            e.preventDefault();
+            drawPic();
+        });
+        $('#defaultForm').bootstrapValidator({
+//        live: 'disabled',
+            message: '这个值不可用',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                username: {
+                    message: '这个用户名不可用',
+                    validators: {
+                        notEmpty: {
+                          /*  message: '用户名不能为空'*/
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: '用户名小于 6 或者 大于30个字符'
+                        },
+                        threshold: 6,
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The password is required and cannot be empty'
+                        },
+
+                        stringLength: {
+                            min: 6,
+                            max: 30,
+                            message: '密码不得少于6位'
+                        },
+
+                    }
+                },
+                validateInput: {
+                    validators: {
+                        notEmpty: {
+                            message: '验证码不能为空'
+                        },
+                        stringLength: {
+                            max: 4,
+                            message: '最大4个字符'
+                        },
+                        callback: {
+                            message: "验证码错误",
+                            callback: function (value, validator) {
+                                value = value.toUpperCase();
+                                console.log(value + contxts);
+                                //将用户输入的值转换为大写
+                                return value === contxts;
+                            }
+                        }
+
+
+                    }
+                }
+            }
+        }).on('success.form.bv', function (e) {
+            // Prevent form submission
+            e.preventDefault();
+            // Get the form instance
+            var $form = $(e.target);
+            // Get the BootstrapValidator instance
+            var bv = $form.data('bootstrapValidator');
+            // Use Ajax to submit form data
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+				console.log(result)
+            	if (result.code ===1000) {
+                    //alert("SUCCESS");
+					console.log(result)
+                    console.log("登陆成功");
+                    window.location.href = "/crawler";
+                    //$('#myModal').modal('hide');
+                } else {
+                    alert("用户名密码错误");
+                }
+            }, 'json');
+        });
+
+
+    })
+</script>
 </body>
 </html>

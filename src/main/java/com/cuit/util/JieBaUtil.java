@@ -2,6 +2,7 @@ package com.cuit.util;
 
 import com.huaban.analysis.jieba.JiebaSegmenter;
 import com.huaban.analysis.jieba.WordDictionary;
+import org.springframework.stereotype.Component;
 
 import java.nio.file.Paths;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  * @description : 一般类
  * @date : 2020-06-01 22:22
  **/
+@Component
 public class JieBaUtil {
     private static JiebaSegmenter segmenter = new JiebaSegmenter();
 

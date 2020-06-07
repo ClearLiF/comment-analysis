@@ -26,6 +26,16 @@ public class Result<T> {
         this.message = ResultEnum.SUCCESS.message;
         this.data = data;
     }
+    public Result(Integer code,T data){
+        if (code==1000){
+            this.code = ResultEnum.SUCCESS.code;
+            this.message = ResultEnum.SUCCESS.message;
+        }else {
+            this.code = ResultEnum.Fail.code;
+            this.message = ResultEnum.Fail.message;
+        }
+        this.data = data;
+    }
 
     public Result() {
         this.code = ResultEnum.SUCCESS.code;

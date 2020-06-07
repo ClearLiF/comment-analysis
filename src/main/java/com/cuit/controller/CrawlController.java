@@ -3,6 +3,7 @@ package com.cuit.controller;
 import com.cuit.dto.CrawlerStatusDTO;
 import com.cuit.result.Result;
 import com.cuit.service.CrawlService;
+import com.cuit.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ public class CrawlController {
     @GetMapping("get")
     public Result<String> get(int num, String keyword, HttpServletRequest request) {
         HttpSession session = request.getSession();
+        HttpUtil.trustAllHosts();
         session.setAttribute("crawlerStatus", "等待中...");
         crawlService.getAndSave(num, keyword, session);
         return new Result("发送任务请求成功！");

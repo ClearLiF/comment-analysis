@@ -30,7 +30,15 @@ spring:
       poolPreparedStatements: true
       # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，
       #'wall'用于防火墙，SpringBoot中没有log4j，我改成了log4j2
-      filters: stat,wall,log4j2
+      #filters: stat,wall,log4j2
+      filter:
+        log4j:
+          enabled: true
+          statement-create-after-log-enabled: false
+          statement-log-enabled: false
+          statement-executable-sql-log-enable: true
+          statement-log-error-enabled: true
+          result-set-log-enabled: false
       #最大PSCache连接
       maxPoolPreparedStatementPerConnectionSize: 20
       useGlobalDataSourceStat: true
@@ -45,6 +53,7 @@ spring:
 # 打印sql
 logging:
   level:
-    ssm.app.mapper: info
-
-
+    root: info
+    ssm.app.mapper: debug
+    druid:
+      sql.Statement: debug
