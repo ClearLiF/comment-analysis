@@ -2,9 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>情感倾向分析</title>
+    <title>情感倾向分析</title><link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/common.css"/>
+    <script src="/js/jquery-3.4.1.js" type="application/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/echarts.min.js" type="application/javascript"></script>
+    <script src="/js/analysis.js" type="application/javascript"></script>
 </head>
 <body>
-
+<div class="container-fluid">
+    <div class="welcome border  rounded">
+        <div>评论情感倾向分析系统</div>
+    </div>
+    <div th:replace="content :: analysis"></div>
+</div>
 </body>
 </html>

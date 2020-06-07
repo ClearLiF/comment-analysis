@@ -149,11 +149,6 @@ public class JDComment {
                 if (page > 20) {
                     break;
                 }
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 List<String> comments = getComment(item, type, page);
                 int size = comments.size();
                 list.addAll(comments);

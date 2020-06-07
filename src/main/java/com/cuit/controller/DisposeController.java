@@ -1,7 +1,6 @@
 package com.cuit.controller;
 
 import com.cuit.result.Result;
-import com.cuit.service.CommentService;
 import com.cuit.service.DisposeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;

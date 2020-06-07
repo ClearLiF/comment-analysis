@@ -26,6 +26,7 @@ public class Hdfs {
     private BufferedWriter writer = null;
 
     public void init() throws IOException {
+        System.setProperty("HADOOP_USER_NAME", "root");
         Configuration conf = new Configuration();
         conf.set("fs.defaultFS", this.hdfs);
         fs = FileSystem.get(conf);

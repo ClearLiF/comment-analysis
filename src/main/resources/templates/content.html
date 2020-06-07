@@ -78,15 +78,17 @@
                 <label class="h6" for="analysis_text">请输入待分析的文本内容：</label>
                 <textarea class="form-control" id="analysis_text" rows="3"></textarea>
             </div>
-            <button id="btn_analysis" class="btn btn-light start">分析</button>
+            <button id="btn_analysis" type="button" class="btn btn-block btn-success start">分析</button>
         </div>
         <div class="collapse" id="analysis_result_div">
             <div class="mt-4">
-                <div class="h5">分析结果：</div>
-                <div class="result ml-5">
-                    情感倾向结论：<b id="analysis_result">好评</b>
+                <div class="h5 float-left">分析结果：</div>
+                <div class="result_pie">
+                    <div class="result ml-5">
+                        情感倾向结论：<b id="analysis_result">好评</b>
+                    </div>
+                    <div id="pieChart" class="ml-5"></div>
                 </div>
-                <div id="pieChart" class="ml-5"></div>
             </div>
         </div>
     </div>

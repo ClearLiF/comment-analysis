@@ -25,16 +25,16 @@
 }
 
 .analysis {
-    padding: 20px 30px;
+    padding: 20px 0px;
 }
-
-#analysis_text {
-    width: 1000px;
+.result_pie{
+    padding-left: 80px;
+    padding-top: 3px;
 }
 
 #pieChart {
-    height: 230px;
-    width: 500px;
+    height: 300px;
+    width: 600px;
 }
 
 a.bar-btn {
