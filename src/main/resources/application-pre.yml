@@ -4,6 +4,26 @@ mybatis:
   mapper-locations: classpath*:generator/*.xml
   type-aliases-package: com.cuit.generate
 spring:
+  redis:
+    host: 47.94.18.106 #哨兵模式下不用配置
+    port: 6379 # 哨兵模式下不用配置
+    password: password
+    timeout: 5000
+    jedis:
+      pool:
+        #最大连接数
+        max-active: 1024
+        #最大阻塞等待时间(负数表示没限制)
+        max-wait: 20000
+        #最大空闲
+        max-idle: 200
+        #最小空闲
+        min-idle: 10
+    sentinel:
+      master: mymaster
+      nodes: 47.94.18.106:26379
+  session:
+    store-type: redis
   datasource:
     url: jdbc:mysql://123.56.125.48:3306/commentanalysis?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: mrli
@@ -57,3 +77,4 @@ logging:
     ssm.app.mapper: debug
     druid:
       sql.Statement: debug
+

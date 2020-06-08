@@ -30,8 +30,8 @@ public class IndexController {
     public void setCustomerService(CustomerService customerService) {
         this.customerService = customerService;
     }
-
-    //@GetMapping("/")
+    @UnAuthRequest
+    @GetMapping("/")
     public String index() {
         return "public";
     }
@@ -57,7 +57,7 @@ public class IndexController {
             return new Result<String>(userLoginDTO.getUsername());
         }else {
             log.warn(userLoginDTO.getUsername()+"登录失败");
-            return new Result<String>(1000,"登录失败");
+            return new Result<String>(2000,"登录失败");
         }
 
     }
