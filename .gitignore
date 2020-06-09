@@ -11,3 +11,4 @@ gen
 
 # Project exclude paths
 /target/
+docker/comment-analysis-1.0-SNAPSHOT.jar

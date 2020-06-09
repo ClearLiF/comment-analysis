@@ -73,8 +73,8 @@ spring:
 # 打印sql
 logging:
   level:
-    root: info
-    ssm.app.mapper: debug
+    root: error
+    ssm.app.mapper: error
     druid:
-      sql.Statement: debug
+      sql.Statement: error
 
