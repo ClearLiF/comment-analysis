@@ -15,7 +15,7 @@ ADD *.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
 
 # Ubuntu 时区
-RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+#RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # 配置容器启动后执行的命令
 #RUN bash -c "touch /app.jar"
 #ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

@@ -7,9 +7,9 @@ spring:
   redis:
     host: 47.94.18.106 #哨兵模式下不用配置
     port: 6379 # 哨兵模式下不用配置
-    password: password
+    password: lq18512863192
     timeout: 5000
-    jedis:
+    lettuce:
       pool:
         #最大连接数
         max-active: 1024
@@ -19,11 +19,15 @@ spring:
         max-idle: 200
         #最小空闲
         min-idle: 10
-    sentinel:
-      master: mymaster
-      nodes: 47.94.18.106:26379
+#    sentinel:
+#      master: mymaster
+#      nodes: 47.94.18.106:26379,111.230.203.6:26379
   session:
     store-type: redis
+    redis:
+      flush-mode: on_save
+      #添加后，redis中的key为spring:session:myproject
+      namespace: myproject
   datasource:
     url: jdbc:mysql://123.56.125.48:3306/commentanalysis?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
     username: mrli

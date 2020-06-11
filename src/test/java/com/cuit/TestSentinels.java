@@ -28,14 +28,14 @@ public class TestSentinels {
         jedisPoolConfig.setMinIdle(5);
         // 哨兵信息
         Set<String> sentinels = new HashSet<>(Arrays.asList("47.94.18.106:26379",
-                "123.56.125.48:26379"));
+                "111.230.203.6:26379"));
         // 创建连接池
-        JedisSentinelPool pool = new JedisSentinelPool("mymaster", sentinels,jedisPoolConfig,"password");
+        JedisSentinelPool pool = new JedisSentinelPool("mymaster", sentinels,jedisPoolConfig,"lq18512863192");
         // 获取客户端
         Jedis jedis = pool.getResource();
         // 执行两个命令
-        jedis.set("mykey", "myvalue");
-        String value = jedis.get("mykey");
+        jedis.set("mykey2", "myvalue");
+        String value = jedis.get("mykey2");
         System.out.println(value);
     }
 }

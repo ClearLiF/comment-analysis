@@ -311,9 +311,9 @@
                         <id>gen-webadmin</id>
                         <phase>package</phase>
                         <configuration>
-                            <tasks>
+                            <target>
                                 <copy todir="docker" file="target/${project.artifactId}-${project.version}.${project.packaging}" />
-                            </tasks>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
